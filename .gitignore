@@ -1,0 +1,7 @@
+/venv
+
+!requirements.txt
+
+*.idea*
+*__pycache__*
+*.ipynb_checkpoints*
