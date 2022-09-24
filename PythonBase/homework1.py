@@ -6,30 +6,29 @@ from math import sqrt, pow
 
 def main():
 
-	num_day = int(input("Enter number day for checked: "))
-	task1(num_day)
+	# num_day = int(input("Enter number day for checked: "))
+	# task1(num_day)
+	# print("\n")
+
+	task2()
 	print("\n")
 
-	x, y, z = (int(input("Enter value predicate: ")) for _ in range(3))
-	task2(x, y, z)
-	print("\n")
-
-	coord_x, coord_y = \
-		(int(input(f"Enter value coordinate {item}: ")) for item in ["x", "y"])
-	task3(coord_x, coord_y)
-	print("\n")
-
-	quarter_num = int(input("Enter number quarter: "))
-	task4(quarter_num)
-	print("\n")
-
-	A_x, A_y, B_x, B_y = (
-		int(item)
-		for item in input(
-			"Enter the coordinates of points A and B separated by a space: "
-		).split(" ")
-	)
-	print(task5(A_x, A_y, B_x, B_y), end="\n")
+	# coord_x, coord_y = \
+	# 	(int(input(f"Enter value coordinate {item}: ")) for item in ["x", "y"])
+	# task3(coord_x, coord_y)
+	# print("\n")
+	#
+	# quarter_num = int(input("Enter number quarter: "))
+	# task4(quarter_num)
+	# print("\n")
+	#
+	# A_x, A_y, B_x, B_y = (
+	# 	int(item)
+	# 	for item in input(
+	# 		"Enter the coordinates of points A and B separated by a space: "
+	# 	).split(" ")
+	# )
+	# print(task5(A_x, A_y, B_x, B_y), end="\n")
 
 
 def task1(num_day: int) -> None:
@@ -46,14 +45,19 @@ def task1(num_day: int) -> None:
 		print("Weekend!")
 
 
-def task2(x: int, y: int, z: int) -> None:
+def task2() -> None:
 	""" Программа для проверки истинности утверждения
 	~(X or Y or Z) = ~X and ~Y and ~Z  для всех значений предикат. """
 
-	if (not (x or y or z)) == (not x and not y and not z):
-		print(f"Утверждение истинно")
-	else:
-		print(f"Утверждение ложно")
+	for x in range(2):
+		for y in range(2):
+			for z in range(2):
+
+				print(x, y, z)
+				if (not (x or y or z)) == (not x and not y and not z):
+					print(f"Утверждение истинно", end="\n\n")
+				else:
+					print(f"Утверждение ложно", end="\n")
 
 
 def task3(coord_x: int, coord_y: int) -> None:
