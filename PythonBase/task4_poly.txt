@@ -1,0 +1,18 @@
+Degree polynomial: 9
+	9*x^9 + 10*x^8 + 6*x^7 + 2*x^6 + 10*x^5 + 7*x^4 + 4*x^3 + 9*x^2 + 2*x^1 + 4 = 0
+
+Degree polynomial: 5
+	2*x^5 + 1*x^4 + 2*x^3 + 2*x^2 + 8*x^1 + 9 = 0
+
+Degree polynomial: 3
+	4*x^3 + 2*x^2 + 2*x^1 + 10 = 0
+
+Degree polynomial: 0
+	Degree less than or equal to zero!
+
+Degree polynomial: -1
+	Degree less than or equal to zero!
+
+Degree polynomial: 4
+	5*x^4 + 5*x^3 + 10*x^1 + 9 = 0
+
