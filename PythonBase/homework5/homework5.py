@@ -123,7 +123,9 @@ def task2(file_in: Path, file_out: Path, mode: str = None) -> None:
 def task3() -> None:
 	""" Создайте программу для игры в "Крестики-нолики". Поле 3x3. Игрок
 	- игрок, без бота. """
-	pass
+	from TicTacToe.tictactoe import tic_tac_toe
+
+	tic_tac_toe()
 
 
 def task4() -> None:
