@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
+from pathlib import Path
 
 import jmespath as jme
 
@@ -23,15 +24,18 @@ class APIDBTelBook(object):
 		return self.__db_data
 
 	@property
-	def db_name(self) -> str:
+	def db_file(self) -> str:
 		return APIDBTelBook.__DB_BOOK
 
 	@logger
 	def _load_db(self) -> None:
 		"""  """
+		if not (Path(self.db_file).is_file() and Path(self.db_file).exists()):
+			return
+
 		self.__db_data = {
 			int(id_): self._form_member(form_.split(" "))
-			for item in read_to_file(self.db_name)
+			for item in read_to_file(self.db_file)
 			for id_, form_ in [tuple(item.strip().split(" ", 1))]
 		}
 
@@ -92,7 +96,7 @@ class APIDBTelBook(object):
 
 	def save(self) -> None:
 		"""  """
-		write_to_file(self.db_name, [
+		write_to_file(self.db_file, [
 			f"{id_} {' '.join(data_.values())}\n"
 			for id_, data_ in self.db_data.items()
 		], mode="w")

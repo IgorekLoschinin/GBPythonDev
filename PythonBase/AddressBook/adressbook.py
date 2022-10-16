@@ -75,9 +75,9 @@ class AddressBook(object):
 				'Ввести здесь: '
 			))
 
-		except ValueError as e:
+		except ValueError:
 			print(msg_err)
-			raise Exception(msg_err + f"\n{e}")
+			selector = None
 
 		return selector
 
