@@ -113,7 +113,8 @@ class CSV(object):
 			csv_reader = csv.DictReader(csv_file)
 
 			return {
-				id_: data_ for id_, data_ in enumerate(csv_reader, 1)
+				data_["id"]: dict(list(data_.items())[1:])
+				for data_ in csv_reader
 			}
 
 	@staticmethod
