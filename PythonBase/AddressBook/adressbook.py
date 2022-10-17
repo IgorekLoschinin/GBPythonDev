@@ -61,7 +61,7 @@ class AddressBook(object):
 					print(msg_warning)
 					log.warning(msg_warning)
 
-		self.db.save()
+			self.db.save()
 
 	@staticmethod
 	def _choice() -> int | None:
@@ -112,20 +112,27 @@ class AddressBook(object):
 
 	def _del_member(self) -> None:
 		""" Удаление участника и всей информации из базы данных по ид. """
+		try:
+			id_member = int(input(
+				"Введите id человека для удаления: "
+			))
+			self.db.delete_(id_member)
 
-		id_member = int(input(
-			"Введите id человека для удаления: "
-		))
-		self.db.delete_(id_member)
+		except ValueError:
+			log.exception('Были введены символы а не число.')
 
 	def _update_member(self) -> None:
 		""" Обновление информации по ид . """
 
-		id_member = int(input(
-			"Введите id человека для обновления инфо: "
-		))
-		new_member = Member()
-		self.db.update_({id_member: new_member.data_member})
+		try:
+			id_member = int(input(
+				"Введите id человека для обновления инфо: "
+			))
+			new_member = Member()
+			self.db.update_({id_member: new_member.data_member})
+
+		except ValueError:
+			log.exception('Были введены символы а не число.')
 
 	def _view_all_db(self) -> None:
 		""" Вывод данных всей базы для просмотра """
