@@ -1,0 +1,20 @@
+{
+    "300": {
+        "lastName": "Asdf",
+        "name": "Asdf",
+        "patronymic": "Asdf",
+        "phoneNumber": "4563456345634563456345634563456"
+    },
+    "374": {
+        "lastName": "Кузнецова",
+        "name": "Софья",
+        "patronymic": "Эдуардовна",
+        "phoneNumber": "375(29)049-29-15"
+    },
+    "375": {
+        "lastName": "Королёв",
+        "name": "Алексей",
+        "patronymic": "Леонидович",
+        "phoneNumber": "375(44)158-58-17"
+    }
+}
