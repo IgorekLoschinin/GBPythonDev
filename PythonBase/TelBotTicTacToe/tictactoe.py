@@ -42,14 +42,21 @@ def telegram_bot():
 			choose_position(message)
 			f[0] = message.text
 
-		elif message.text not in "XO" and message.text in BOARD:
-			res_win = tic_tac_toe(COUNTER, FIGURE[-1], message.text)
+		elif message.text not in "XO":
+			if message.text in BOARD:
+				res_win = tic_tac_toe(COUNTER, FIGURE[-1], message.text)
 
-			if res_win is not None:
-				res_handling(message, res_win)
+				if res_win is not None:
+					res_handling(message, res_win)
+
+				else:
+					back_to_gen_menu(message, FIGURE[-1])
 
 			else:
-				back_to_gen_menu(message, FIGURE[-1])
+				bot.send_message(
+					message.chat.id,
+					text="Эта позиция занята!"
+				)
 
 		elif message.text == "Finish!!!":
 			finish(message)
@@ -129,9 +136,7 @@ def telegram_bot():
 
 def tic_tac_toe(counter, figure: str, pos_for_fig: str) -> str | None:
 
-	choose = make_chose(figure, pos_for_fig)
-	if choose is not None:
-		return choose
+	make_chose(figure, pos_for_fig)
 
 	counter[0] += 1
 	if counter[0] > 4:
