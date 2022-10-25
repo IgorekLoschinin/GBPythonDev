@@ -16,6 +16,8 @@ class Calculator(object):
 		self._action = None
 		self._x = None
 		self._y = None
+		self._real = None
+		self._imag = None
 		self._degree = None
 
 	def start(self) -> None:
@@ -38,35 +40,29 @@ class Calculator(object):
 				continue
 
 			if self._action in ('+', '-', '*', '/'):
-				if not self.input_arg_x() or not self.input_arg_y():
+				if not self.input_arg(promt="x") or \
+						not self.input_arg(promt="y"):
 					continue
 
-				if not self.base_operations():
+			if self._action == "pow":
+				if not self.input_arg(promt="x") or \
+						not self.input_arg(promt="degree"):
 					continue
 
-			if self._action == "q":
+			elif self._action == "sqrt":
+				if not self.input_arg(promt="x"):
+					continue
+
+			elif self._action == "complex":
+				if not self.action_complex():
+					continue
+
+			elif self._action == "q":
 				print("Выход из программы")
 				sys.exit()
 
-			if self._action == "pow":
-				if not self.input_arg_x() or not self.input_arg_degree():
-					continue
-
-				print(
-					f'{self._x} ^ {self._degree} = '
-					f'{(self._x ** self._degree)}\n'
-				)
-
-			elif self._action == "sqrt":
-				if not self.input_arg_x():
-					continue
-
-				print(
-					f'√{self._x} = {math.sqrt(self._x)}\n'
-				)
-
-			elif self._action == "complex":
-				self.action_complex()
+			if not self.base_operations():
+				continue
 
 	def base_operations(self) -> bool:
 		if self._action == '+':
@@ -95,10 +91,21 @@ class Calculator(object):
 				log.error("Деление на ноль!\n")
 				return False
 
+		elif self._action == "pow":
+			print(
+				f'{self._x} ^ {self._degree} = '
+				f'{(self._x ** self._degree)}\n'
+			)
+
+		elif self._action == "sqrt":
+			print(
+				f'√{self._x} = {math.sqrt(self._x)}\n'
+			)
+
 		return True
 
-	def input_action(self) -> bool:
-		act = input("Действие: ")
+	def input_action(self, msg: str = "Действие: ") -> bool:
+		act = input(msg)
 
 		if act not in self._actions:
 			print("Введеная операция отсутствует.\nВыберите из имеющихся!\n")
@@ -108,39 +115,31 @@ class Calculator(object):
 		self._action = act
 		return True
 
-	def input_arg_x(self) -> bool:
-		x = input("x = ")
+	def input_arg(self, promt: str = "arg") -> bool:
 
-		if not self.is_number(x):
-			print("X не является чилом.\n")
-			log.error("X не является чиломю.\n")
+		arg = input(f"{promt} = ")
+
+		if not self.is_number(arg):
+			print(f"{promt} не является чилом.\n")
+			log.error(f"{promt} не является чилом.\n")
 			return False
 
-		self._x = float(x)
+		match promt.lower():
+			case "x":
+				self._x = float(arg)
 
-		return True
+			case "y":
+				self._y = float(arg)
 
-	def input_arg_y(self) -> bool:
-		y = input("y = ")
+			case "degree":
+				self._degree = float(arg)
 
-		if not self.is_number(y):
-			print("Y не является чилом.\n")
-			log.error("Y не является чилом.\n")
-			return False
+			case "real":
+				self._real = float(arg)
 
-		self._y = float(y)
+			case "imag":
+				self._imag = float(arg)
 
-		return True
-
-	def input_arg_degree(self) -> bool:
-		degree = input("degree = ")
-
-		if not self.is_number(degree):
-			print("degree не является чилом.\n")
-			log.error("degree не является чилом.\n")
-			return False
-
-		self._degree = float(degree)
 		return True
 
 	@staticmethod
@@ -152,30 +151,52 @@ class Calculator(object):
 			return False
 
 	def action_complex(self) -> bool:
-		complex_num = []
-
 		count = 1
-		while count <= 2:
-			print(
-				f"Введите Real и Imag для {count}-ого комплексного числа: ",
-				end='\n'
-			)
-			if not self.input_arg_x() or not self.input_arg_y():
-				return False
+		lst_compl_num = []
 
-			if self._y < 0:
-				complex_num.append(complex(f"{self._x}{self._y}j"))
-
-			else:
-				complex_num.append(complex(f"{self._x}+{self._y}j"))
-
-			count += 1
-
-		if not self.input_action():
+		if not self.input_action(msg="Действие над компл. чис.: "):
 			return False
 
-		self._x, self._y = complex_num
-		self.base_operations()
+		if self._action in ('+', '-', '*', '/'):
+			while count <= 2:
+				print("Введите Real и Imag коэффициенты компл. ч.: ", end="\n")
+
+				if not self.input_arg(promt="real") or \
+					not self.input_arg(promt="imag"):
+					return False
+
+				count += 1
+				lst_compl_num.append(self.complex_num())
+
+			self._x, self._y = lst_compl_num
+			return True
+
+		match self._action:
+			case "pow":
+				if not self.input_arg(promt="real") or \
+						not self.input_arg(promt="imag") or \
+						not self.input_arg(promt="degree"):
+					return False
+
+				self._x = self.complex_num()
+				return True
+
+			case "sqrt":
+				if not self.input_arg(promt="real") or \
+						not self.input_arg(promt="imag"):
+					return False
+
+				self._x = self.complex_num()
+				return True
+
+		return False
+
+	def complex_num(self) -> complex:
+		if self._imag < 0:
+			return complex(f"{self._real}{self._imag}j")
+
+		else:
+			return complex(f"{self._real}+{self._imag}j")
 
 
 if __name__ == "__main__":
